@@ -1,3 +1,7 @@
+let nextPizzaId = 1
+let cashInRegister = 100
+let nextOrderId = 1
+
 type Pizza = {
     id: number
     name: string
@@ -11,19 +15,22 @@ type Order = {
 }
 
 const menu: Pizza[] = [
-    { id: 1, name: "Margaritha", price: 8 },
-    { id: 2, name: "Pepperoni", price: 10 },
-    { id: 3, name: "Hawaiian", price: 10 },
-    { id: 4, name: "Veggie", price: 9 },
+    { id: nextPizzaId++, name: "Margaritha", price: 8 },
+    { id: nextPizzaId++, name: "Pepperoni", price: 10 },
+    { id: nextPizzaId++, name: "Hawaiian", price: 10 },
+    { id: nextPizzaId++, name: "Veggie", price: 9 },
 ]
 
-let cashInRegister = 100
 const orderHistory: Order[] = []
-let nextOrderId = 1
 
 
-function addNewPizza(pizza: Pizza): void {
-    menu.push(pizza)
+function addNewPizza(pizzaObj: Omit<Pizza, "id">): Pizza {
+    const pizzaNew: Pizza = {
+        id: nextPizzaId++, 
+        ...pizzaObj
+    }
+    menu.push(pizzaNew)
+    return pizzaNew
 }
 
 function placeOrder(pizzaName: string): Order | undefined {
@@ -61,9 +68,9 @@ export function getPizzaDetail(identifer: number | string): Pizza | undefined {
     })
 }
 
-addNewPizza({ id: 5, name: "Chicken Bacon Ranch", price: 12 })
-addNewPizza({ id: 6, name: "BBQ Chicken", price: 12 })
-addNewPizza({ id: 7, name: "Spicy Sausage", price: 12 })
+addNewPizza({ name: "Chicken Bacon Ranch", price: 2 })
+addNewPizza({ name: "BBQ Chicken", price: 12 })
+addNewPizza({ name: "Spicy Sausage", price: 12 })
 
 placeOrder("Chicken Bacon Ranch")
 completeOrder(1)
