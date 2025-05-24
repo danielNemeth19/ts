@@ -26,7 +26,7 @@ const orderHistory: Order[] = []
 
 function addNewPizza(pizzaObj: Omit<Pizza, "id">): Pizza {
     const pizzaNew: Pizza = {
-        id: nextPizzaId++, 
+        id: nextPizzaId++,
         ...pizzaObj
     }
     menu.push(pizzaNew)
@@ -68,6 +68,17 @@ export function getPizzaDetail(identifer: number | string): Pizza | undefined {
     })
 }
 
+function addToArray<T>(arrayInp: T[], item:T): T[] {
+  arrayInp.push(item)
+  return arrayInp
+}
+
+addToArray<Pizza>(menu, {id: nextPizzaId++, name: "Chicken Bacon Ranch", price: 12})
+addToArray<Order>(orderHistory, {id: nextOrderId++, pizza: menu[2], status: "completed" })
+
+console.log(menu)
+console.log(orderHistory)
+
 addNewPizza({ name: "Chicken Bacon Ranch", price: 2 })
 addNewPizza({ name: "BBQ Chicken", price: 12 })
 addNewPizza({ name: "Spicy Sausage", price: 12 })
@@ -80,4 +91,3 @@ console.log("Cash in register", cashInRegister)
 console.log("Order queue", orderHistory)
 
 console.log(getPizzaDetail("BBQ Chicken"))
-
